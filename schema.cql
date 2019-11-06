@@ -1,4 +1,4 @@
-
+DROP KEYSPACE datafy;
 
 CREATE KEYSPACE datafy WITH replication = {'class' : 'SimpleStrategy', 'replication_factor' : 5 };
 
@@ -11,11 +11,11 @@ USE datafy;
 CREATE TABLE reviews_by_listing
 (
 listingId int,
-responseId int,
+posted int,
 reviewId int,
 author text,
 avatar text,
-posted timestamp,
 body text,
-PRIMARY KEY (listingId, timestamp DESCENDING, reviewId)
-);
+responseId int,
+PRIMARY KEY (listingId, posted, reviewId)
+) WITH CLUSTERING ORDER BY (posted DESC, reviewId ASC);
