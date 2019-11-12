@@ -1,3 +1,5 @@
+
+
 DROP TABLE IF EXISTS reviews_by_listing;
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS listings;
@@ -17,8 +19,8 @@ title VARCHAR (255)
 
 CREATE TABLE reviews (
 review_id SERIAL PRIMARY KEY,
-user_id INT references users(user_id),
-listing_id INT references listings(listing_id),
+user_id INT,
+listing_id INT,
 posted INT,
 body VARCHAR (2000),
 response_id INTEGER DEFAULT NULL
@@ -28,9 +30,9 @@ response_id INTEGER DEFAULT NULL
 
 CREATE TABLE reviews_by_listing (
 id SERIAL PRIMARY KEY,
-user_id INT references users(user_id),
-review_id INT references reviews(review_id),
-listing_id INT references listings(listing_id)
+user_id INT,
+review_id INT,
+listing_id INT
 );
 
 

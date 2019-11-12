@@ -1,6 +1,6 @@
 DROP KEYSPACE datafy;
 
-CREATE KEYSPACE datafy WITH replication = {'class' : 'SimpleStrategy', 'replication_factor' : 5 };
+CREATE KEYSPACE datafy WITH replication = {'class' : 'SimpleStrategy', 'replication_factor' : 1 }; 
 
 
 USE datafy;

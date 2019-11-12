@@ -1,9 +1,11 @@
+require('newrelic');
 const compression = require('compression');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const Review = require('../db/reviewsDb.js');
 const test = require('../db/dataGen.js');
+const db = require('../db/queries/cassQueries');
 
 const app = express();
 
@@ -37,7 +39,7 @@ const getAverage = function(array, key) {
     return 0;
   }
 };
-
+app.use(express.json());
 app.use(compression({ filter: shouldCompress }));
 
 function shouldCompress(req, res) {
@@ -96,6 +98,14 @@ app.get('/:id', (req, res) => {
       //console.log('this is the new created object I want to send to the client ', locationReviewsObject)
       res.send(locationReviewsObject);
     });
+});
+
+app.get('/listings/:listingId/reviews', (req, res) => {
+  db.getAllReviews(req, res);
+});
+
+app.post('/listings/:listingId/reviews', (req, res) => {
+  db.postReview(req, res);
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
