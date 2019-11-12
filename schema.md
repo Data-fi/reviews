@@ -11,7 +11,11 @@ author text,
 avatar text,
 posted timestamp,
 body text,
+<<<<<<< HEAD
 PRIMARY KEY (listingId, posted, reviewId) WITH CLUSTERING ORDER BY (posted DESC, reviewId ASC)
+=======
+PRIMARY KEY (listingId, timestamp DESCENDING, reviewId)
+>>>>>>> f8563c77d78f106c523a6da6cbabc18fe94721f6
 );
 
 ///////////////////////////////////////
