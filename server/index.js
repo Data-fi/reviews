@@ -1,11 +1,11 @@
-require('newrelic');
-const compression = require('compression');
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
-const Review = require('../db/reviewsDb.js');
-const test = require('../db/dataGen.js');
-const db = require('../db/queries/cassQueries');
+require("newrelic");
+const compression = require("compression");
+const express = require("express");
+const path = require("path");
+const bodyParser = require("body-parser");
+const Review = require("../db/reviewsDb.js");
+const test = require("../db/dataGen.js");
+const db = require("../db/queries/cassQueries");
 
 const app = express();
 
@@ -43,28 +43,28 @@ app.use(express.json());
 app.use(compression({ filter: shouldCompress }));
 
 function shouldCompress(req, res) {
-  if (req.headers['x-no-compression']) {
+  if (req.headers["x-no-compression"]) {
     return false;
   }
   return compression.filter(req, res);
 }
 
-app.get('/favicon.ico', (req, res) => res.status(204));
+app.get("/favicon.ico", (req, res) => res.status(204));
 
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
   res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
 });
 
-app.use('/', express.static(path.join(__dirname, '../public')));
+app.use("/", express.static(path.join(__dirname, "../public")));
 
-app.use('/rooms/:id', express.static(path.join(__dirname, '../public'))); //rooms/:id
+app.use("/rooms/:id", express.static(path.join(__dirname, "../public"))); //rooms/:id
 
-app.get('/:id', (req, res) => {
+app.get("/:id", (req, res) => {
   var locationReviewsObject = {};
   //console.log('this should be the numebr 1 ', req.params.id)
   //req.params.id
@@ -75,24 +75,24 @@ app.get('/:id', (req, res) => {
       locationReviewsObject.copyData = callback;
       locationReviewsObject.count = callback.length;
       locationReviewsObject.pageReviews = callback.slice(0, 7);
-      locationReviewsObject.checkIn = getAverage(callback, 'checkIn').toFixed(
+      locationReviewsObject.checkIn = getAverage(callback, "checkIn").toFixed(
         1
       );
-      locationReviewsObject.accuracy = getAverage(callback, 'accuracy').toFixed(
+      locationReviewsObject.accuracy = getAverage(callback, "accuracy").toFixed(
         1
       );
       locationReviewsObject.cleanliness = getAverage(
         callback,
-        'cleanliness'
+        "cleanliness"
       ).toFixed(1);
       locationReviewsObject.communication = getAverage(
         callback,
-        'communication'
+        "communication"
       ).toFixed(1);
-      locationReviewsObject.location = getAverage(callback, 'location').toFixed(
+      locationReviewsObject.location = getAverage(callback, "location").toFixed(
         1
       );
-      locationReviewsObject.value = getAverage(callback, 'value').toFixed(1);
+      locationReviewsObject.value = getAverage(callback, "value").toFixed(1);
       // locationReviewsObject.totalAverage = allAverage(callback).toFixed(2);
 
       //console.log('this is the new created object I want to send to the client ', locationReviewsObject)
@@ -100,11 +100,9 @@ app.get('/:id', (req, res) => {
     });
 });
 
-app.get('/listings/:listingId/reviews', (req, res) => {
-  db.getAllReviews(req, res);
-});
+app.get("/listings/:listingId/reviews", db.getAllReviews);
 
-app.post('/listings/:listingId/reviews', (req, res) => {
+app.post("/listings/:listingId/reviews", (req, res) => {
   db.postReview(req, res);
 });
 
