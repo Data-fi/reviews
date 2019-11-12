@@ -46,12 +46,16 @@
     "faker": "^4.1.0",
     "fs": "0.0.1-security",
     "moment": "^2.24.0",
+    "moment-random": "^1.0.5",
     "mongoose": "^5.7.5",
+    "newrelic": "^6.1.0",
     "nodemon": "^1.19.3",
     "path": "^0.12.7",
     "random-date-generator": "^1.0.2",
     "react": "^16.10.2",
-    "react-dom": "^16.10.2"
+    "react-dom": "^16.10.2",
+    "stream": "0.0.2",
+    "zlib": "^1.0.5"
   },
   "jest": {
     "moduleNameMapper": {
